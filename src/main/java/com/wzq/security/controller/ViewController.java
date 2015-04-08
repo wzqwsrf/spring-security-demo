@@ -66,5 +66,13 @@ public class ViewController {
         return new ModelAndView("/403");
     }
 
+    /**
+     * 403
+     */
+    @RequestMapping(value = "error.jsp")
+    public ModelAndView error() {
+        return new ModelAndView("/error");
+    }
+
 
 }
