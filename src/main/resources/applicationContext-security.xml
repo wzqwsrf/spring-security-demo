@@ -7,30 +7,36 @@
              http://www.springframework.org/schema/security
              http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <http auto-config="true">
+    <http auto-config='true'>
+        <intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/error.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/admin.jsp" access="ROLE_ADMIN"/>
         <intercept-url pattern="/**" access="ROLE_USER"/>
+        <form-login login-page="/login.jsp"
+                    authentication-failure-url="/error.jsp"
+                    default-target-url="/"/>
     </http>
+
     <!-- 认证管理器。用户名密码都集成在配置文件中 -->
     <authentication-manager>
         <authentication-provider>
             <!--<user-service>-->
                 <!--<user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN"/>-->
-                <!--<user name="user" password="user" authorities="ROLE_USER" />-->
+                <!--<user name="user" password="user" authorities="ROLE_USER"/>-->
             <!--</user-service>-->
             <jdbc-user-service data-source-ref="dataSource"
-                               users-by-username-query=
-                                       "select username,password,status as enabled
-                                        from users
-                                        where username=?"
-                               authorities-by-username-query=
-                                       "select u.username,r.name as authority
-                                        from users u
-                                        join user_role ur
-                                        on u.id=ur.user_id
-                                        join role r
-                                        on r.id=ur.role_id
-                                        where u.username=?"/>
+            users-by-username-query=
+            "select username,password,status as enabled
+            from users
+            where username=?"
+            authorities-by-username-query=
+            "select u.username,r.name as authority
+            from users u
+            join user_role ur
+            on u.id=ur.user_id
+            join role r
+            on r.id=ur.role_id
+            where u.username=?"/>
         </authentication-provider>
     </authentication-manager>
 

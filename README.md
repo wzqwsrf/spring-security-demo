@@ -16,29 +16,32 @@
 - ApplicationContext-security.xml 
 
 ```
-    <global-method-security pre-post-annotations="enabled" />
-
-    <http pattern="/login.jsp" security="none" />
-
-    <http auto-config='true' access-denied-page="/403.jsp">
-        <intercept-url pattern="success.jsp" access="ROLE_USER,ROLE_ADMIN"/>
-        <intercept-url pattern="anonymously.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <!-- ROLE_ADMIN 权限访问-->
-        <intercept-url pattern="admin.jsp" access="ROLE_ADMIN"/>
-        <!-- ROLE_ADMIN 权限访问-->
-        <!-- ROLE_USER 权限访问-->
-        <intercept-url pattern="/**" access="ROLE_USER"/>
-        <!-- 成功访问的页面-->
-        <logout invalidate-session="true" logout-success-url="/index.jsp" logout-url="/j_spring_security_logout" />
-    </http>
-    <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN"/>
-                <user name="zhenqing.wang" password="123" authorities="ROLE_USER"/>
-            </user-service>
-        </authentication-provider>
-    </authentication-manager>
+    <http auto-config="true">
+            <intercept-url pattern="/admin.jsp" access="ROLE_ADMIN"/>
+            <intercept-url pattern="/**" access="ROLE_USER"/>
+        </http>
+        <!-- 认证管理器。用户名密码都集成在配置文件中 -->
+        <authentication-manager>
+            <authentication-provider>
+                <!--<user-service>-->
+                    <!--<user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN"/>-->
+                    <!--<user name="user" password="user" authorities="ROLE_USER" />-->
+                <!--</user-service>-->
+                <jdbc-user-service data-source-ref="dataSource"
+                                   users-by-username-query=
+                                           "select username,password,status as enabled
+                                            from users
+                                            where username=?"
+                                   authorities-by-username-query=
+                                           "select u.username,r.name as authority
+                                            from users u
+                                            join user_role ur
+                                            on u.id=ur.user_id
+                                            join role r
+                                            on r.id=ur.role_id
+                                            where u.username=?"/>
+            </authentication-provider>
+        </authentication-manager>
 ```
 #### 2. 访问
 
