@@ -27,7 +27,7 @@ public class ViewController {
      */
     @RequestMapping(value = "index.jsp")
     public ModelAndView index() {
-        return new ModelAndView("/login");
+        return new ModelAndView("/index");
     }
 
 

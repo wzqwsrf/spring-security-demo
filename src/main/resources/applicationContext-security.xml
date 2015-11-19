@@ -7,60 +7,18 @@
              http://www.springframework.org/schema/security
              http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <global-method-security pre-post-annotations="enabled" />
-
-    <http pattern="/login.jsp" security="none" />
-    <http pattern="/error.jsp" security="none" />
-    <http pattern="/success.jsp" security="none" />
-
-    <http auto-config='true' access-denied-page="/403.jsp">
-        <custom-filter before="FORM_LOGIN_FILTER" ref="ldapFilter" />
-        <form-login login-page="/login.jsp" authentication-failure-url="/login/error" default-target-url="/" />
-        <!--<intercept-url pattern="success.jsp" access="ROLE_USER,ROLE_ADMIN"/>-->
-        <intercept-url pattern="anonymously.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <!-- ROLE_ADMIN 权限访问-->
-        <intercept-url pattern="admin.jsp" access="ROLE_ADMIN"/>
-        <!-- ROLE_ADMIN 权限访问-->
-        <!-- ROLE_USER 权限访问-->
+    <http auto-config="true">
+        <intercept-url pattern="/admin.jsp" access="ROLE_ADMIN"/>
         <intercept-url pattern="/**" access="ROLE_USER"/>
-        <!-- 成功访问的页面-->
-        <logout invalidate-session="true" logout-success-url="/index.jsp" logout-url="/j_spring_security_logout" />
-        <!--<session-management>-->
-            <!--<concurrency-control error-if-maximum-exceeded="true" max-sessions="1" />-->
-        <!--</session-management>-->
-
     </http>
-
-
-    <beans:bean id="ldapFilter" class="com.wzq.security.acsecurity.LdapFilter">
-        <beans:property name ="authenticationManager"  ref ="authenticationManager" />
-        <beans:property name ="authenticationFailureHandler"  ref ="authenticationFailureHandler" />
-        <beans:property name ="authenticationSuccessHandler"  ref ="authenticationSuccessHandler" />
-
-    </beans:bean>
-
-    <beans:bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-        <beans:property name="defaultFailureUrl">
-            <beans:value>/error.jsp</beans:value>
-        </beans:property>
-    </beans:bean>
-    <!--<beans:bean id="authenticationSuccessHandler" class="com.wzq.security.acsecurity.AuthenticationSuccessHandler">-->
-    <beans:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
-        <beans:property name="defaultTargetUrl">
-            <beans:value>/success.jsp</beans:value>
-        </beans:property>
-    </beans:bean>
-    <authentication-manager alias="authenticationManager">
-        <authentication-provider
-                user-service-ref='myUserDetailService'/>
-        <!--<authentication-provider>-->
-            <!--<user-service>-->
-                <!--<user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN"/>-->
-                <!--<user name="zhenqing.wang" password="123" authorities="ROLE_USER"/>-->
-            <!--</user-service>-->
-        <!--</authentication-provider>-->
+    <!-- 认证管理器。用户名密码都集成在配置文件中 -->
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN"/>
+                <user name="user" password="user" authorities="ROLE_USER" />
+            </user-service>
+        </authentication-provider>
     </authentication-manager>
-
-    <beans:bean id="myUserDetailService" class="com.wzq.security.service.MyUserDetailService"/>
 
 </beans:beans>
