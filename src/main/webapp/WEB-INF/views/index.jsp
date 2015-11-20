@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Foo实例</title>
-</head>
-<body>启动成功
-</body>
-</html>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<div>username : <sec:authentication property="name"/></div>
+<hr>
+<a href="admin.jsp">this is the admin.jsp</a>
+<a href="j_spring_security_logout">logout</a>

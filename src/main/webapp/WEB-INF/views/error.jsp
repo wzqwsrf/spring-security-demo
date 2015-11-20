@@ -5,6 +5,6 @@
     <title>error</title>
 </head>
 <body>
-<h3>验证失败</h3>
+<div>验证失败</div>
 </body>
 </html>

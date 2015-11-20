@@ -7,7 +7,7 @@
              http://www.springframework.org/schema/security
              http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <http auto-config='true'>
+    <http auto-config="true" access-denied-page="/403.jsp">
         <intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/error.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/admin.jsp" access="ROLE_ADMIN"/>

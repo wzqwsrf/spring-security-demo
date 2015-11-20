@@ -35,26 +35,17 @@ public class ViewController {
      * admin
      */
     @RequestMapping(value = "admin.jsp")
-    public ModelAndView admin() {
-        return new ModelAndView("/admin");
+    public String admin() {
+        return "/admin";
     }
 
 
     /**
-     * anonymously
+     * error
      */
-    @RequestMapping(value = "anonymously.jsp")
+    @RequestMapping(value = "error.jsp")
     public ModelAndView anonymously() {
-        return new ModelAndView("/anonymously");
-    }
-
-
-    /**
-     * success
-     */
-    @RequestMapping(value = "success.jsp")
-    public ModelAndView success() {
-        return new ModelAndView("/success");
+        return new ModelAndView("/error");
     }
 
 
@@ -62,17 +53,8 @@ public class ViewController {
      * 403
      */
     @RequestMapping(value = "403.jsp")
-    public ModelAndView deny() {
-        return new ModelAndView("/403");
+    public String deny() {
+        return "/403";
     }
-
-    /**
-     * 403
-     */
-    @RequestMapping(value = "error.jsp")
-    public ModelAndView error() {
-        return new ModelAndView("/error");
-    }
-
 
 }
