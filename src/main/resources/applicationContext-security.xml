@@ -15,7 +15,12 @@
         <form-login login-page="/login"
                     authentication-failure-url="/error"
                     default-target-url="/"/>
+        <session-management>
+            <concurrency-control error-if-maximum-exceeded="false" />
+        </session-management>
+
     </http>
+
 
     <!-- 认证管理器。用户名密码都集成在配置文件中 -->
     <authentication-manager>
