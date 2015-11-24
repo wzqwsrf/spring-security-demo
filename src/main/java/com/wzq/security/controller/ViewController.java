@@ -17,8 +17,8 @@ public class ViewController {
      * 登陆界面
      */
     @RequestMapping(value = "login")
-    public ModelAndView login() {
-        return new ModelAndView("login");
+    public String login() {
+        return "/login";
     }
 
 
@@ -37,7 +37,7 @@ public class ViewController {
      */
     @RequestMapping(value = "admin")
     public String admin() {
-        return "admin";
+        return "/admin";
     }
 
 
@@ -45,8 +45,8 @@ public class ViewController {
      * error
      */
     @RequestMapping(value = "error")
-    public ModelAndView anonymously() {
-        return new ModelAndView("/error");
+    public String error() {
+        return "/error";
     }
 
 

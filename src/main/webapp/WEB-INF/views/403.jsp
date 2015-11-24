@@ -15,7 +15,6 @@
 <body>
 <h1>Access Denied</h1>
 <hr>
-<%@ page contentType="text/html;charset=UTF-8"%>
 <div class="error">
     访问被拒绝<br>
     ${requestScope['SPRING_SECURITY_403_EXCEPTION'].message}
