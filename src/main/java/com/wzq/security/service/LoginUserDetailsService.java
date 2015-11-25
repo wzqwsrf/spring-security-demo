@@ -2,7 +2,6 @@ package com.wzq.security.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Created by wzqwsrf on 15/4/8.
@@ -30,10 +28,10 @@ import java.util.logging.Logger;
  * </authentication-manager>
  * 改为从数据库获取权限
  */
-@Service("myUserDetailService")
-public class MyUserDetailService implements UserDetailsService {
+@Service("loginUserDetailsService")
+public class LoginUserDetailsService implements UserDetailsService {
 
-    private Log log = LogFactory.getLog(MyUserDetailService.class);
+    private Log log = LogFactory.getLog(LoginUserDetailsService.class);
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
