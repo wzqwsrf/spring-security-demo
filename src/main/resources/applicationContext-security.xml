@@ -24,7 +24,8 @@
 
     <!-- 认证管理器。用户名密码都集成在配置文件中 -->
     <authentication-manager alias="authenticationManager">
-        <authentication-provider ref="loginAuthenticationProvider">
+        <authentication-provider user-service-ref="loginUserDetailsService">
+        <!--<authentication-provider ref="loginAuthenticationProvider">-->
             <!--<user-service>-->
                 <!--<user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN"/>-->
                 <!--<user name="user" password="user" authorities="ROLE_USER"/>-->

@@ -35,7 +35,7 @@ public class LoginUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails user = new User("zhenqing.wang","123",true, true, true, true, getAuthorities("zhenqing.wang"));
+        UserDetails user = new User("user","user",true, true, true, true, getAuthorities("zhenqing.wang"));
         return user;
     }
 
