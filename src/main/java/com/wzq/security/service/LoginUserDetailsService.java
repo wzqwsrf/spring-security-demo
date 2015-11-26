@@ -1,7 +1,10 @@
 package com.wzq.security.service;
 
+import com.wzq.security.model.Role;
+import com.wzq.security.model.Users;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -11,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -31,17 +33,38 @@ import java.util.List;
 @Service("loginUserDetailsService")
 public class LoginUserDetailsService implements UserDetailsService {
 
+    private UserRoleService userRoleService;
+
     private Log log = LogFactory.getLog(LoginUserDetailsService.class);
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails user = new User("user","user",true, true, true, true, getAuthorities("zhenqing.wang"));
-        return user;
+        log.info("====username:" + username);
+        System.out.println("username:" + username);
+        Users user = userRoleService.getUserByUserName(username);
+        log.info("====username:" + user.getUsername());
+        log.info("====password:" + user.getPassword());
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+
+        UserDetails newUser = new User(user.getUsername(), user.getPassword(), user.getStatus() == 1,
+                true, true, true, authorities);
+        return newUser;
+
+//        List<GrantedAuthority> author = new ArrayList<GrantedAuthority>();
+//        author.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+//        return new User("admin","admin",true, true, true, true, author);
     }
 
-    public Collection<GrantedAuthority> getAuthorities(String username){
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        return authorities;
+    public UserRoleService getUserRoleService() {
+        return userRoleService;
+    }
+
+    @Autowired
+    public void setUserRoleService(UserRoleService userRoleService) {
+        this.userRoleService = userRoleService;
     }
 }
