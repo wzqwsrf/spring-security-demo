@@ -1,6 +1,5 @@
 package com.wzq.security.acsecurity;
 
-import com.wzq.security.service.LoginUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;

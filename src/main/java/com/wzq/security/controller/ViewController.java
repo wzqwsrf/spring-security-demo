@@ -2,8 +2,6 @@ package com.wzq.security.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * Created by wzqwsrf on 15/4/7.

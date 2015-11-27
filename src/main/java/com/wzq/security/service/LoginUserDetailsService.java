@@ -40,7 +40,6 @@ public class LoginUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("====username:" + username);
-        System.out.println("username:" + username);
         Users user = userRoleService.getUserByUserName(username);
         log.info("====username:" + user.getUsername());
         log.info("====password:" + user.getPassword());

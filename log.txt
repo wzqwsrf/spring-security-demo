@@ -10656,3 +10656,7 @@ org.springframework.security.access.AccessDeniedException: Access is denied
 2015-11-26 17:54:06 [DEBUG] Forwarding to resource [/WEB-INF/views//403.jsp] in InternalResourceView '/403'
 2015-11-26 17:54:06 [DEBUG] Successfully completed request
 2015-11-26 17:54:06 [DEBUG] SecurityContextHolder now cleared, as request processing completed
+2015-11-26 18:24:20 [DEBUG] Publishing event: org.springframework.security.web.session.HttpSessionDestroyedEvent[source=org.apache.catalina.session.StandardSessionFacade@7b1b315c]
+2015-11-26 18:24:20 [DEBUG] Removing session 3B0CB499321617C0F70DDC5E413ACC16 from principal's set of registered sessions
+2015-11-26 18:24:20 [DEBUG] Removing principal org.springframework.security.core.userdetails.User@36ebcb: Username: user; Password: [PROTECTED]; Enabled: true; AccountNonExpired: true; credentialsNonExpired: true; AccountNonLocked: true; Granted Authorities: ROLE_USER from registry
+2015-11-26 18:24:20 [DEBUG] Publishing event: org.springframework.security.web.session.HttpSessionDestroyedEvent[source=org.apache.catalina.session.StandardSessionFacade@4cc0e346]

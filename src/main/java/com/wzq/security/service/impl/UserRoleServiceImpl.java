@@ -1,10 +1,9 @@
 package com.wzq.security.service.impl;
 
-import com.wzq.security.model.Users;
 import com.wzq.security.dao.UserDaoMapper;
+import com.wzq.security.model.Users;
 import com.wzq.security.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,7 +20,6 @@ public class UserRoleServiceImpl implements UserRoleService{
     @Override
     public Users getUserByUserName(String username) {
         System.out.println("UserRoleServiceImpl");
-//        Users users = userDao.getUserById(1);
         Users users = userDao.getUserByName(username);
         System.out.println("users:"+username);
         return users;

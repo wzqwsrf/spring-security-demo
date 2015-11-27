@@ -2,7 +2,6 @@ package com.wzq.security.acsecurity;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
