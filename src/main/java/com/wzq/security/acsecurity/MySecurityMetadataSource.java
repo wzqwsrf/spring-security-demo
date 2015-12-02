@@ -51,7 +51,7 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return false;
+        return true;
     }
 
 //    public void refreshResource() {
