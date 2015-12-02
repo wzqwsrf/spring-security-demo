@@ -7,43 +7,41 @@
              http://www.springframework.org/schema/security
              http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
+    <global-method-security pre-post-annotations="enabled"/>
+    <!-- 该路径下的资源不用过滤 -->
+    <http pattern="/assets/**" security="none"/>
+    <http pattern="/portal/**" security="none"/>
+    <http pattern="/login" security="none"/>
+    <http pattern="/auth" security="none"/>
+    <http pattern="/login/**" security="none"/>
+    <http pattern="/403" security="none"/>
+    <http pattern="/logout" security="none"/>
+    <http pattern="/favicon.ico" security="none"/>
+    <http pattern="/favicon.html" security="none"/>
+
     <http auto-config="true" access-denied-page="/403">
-        <intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <intercept-url pattern="/error" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <intercept-url pattern="/admin" access="ROLE_ADMIN"/>
-        <intercept-url pattern="/**" access="ROLE_USER"/>
         <form-login login-page="/login"
                     authentication-failure-url="/error"
                     default-target-url="/"/>
+        <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
         <session-management>
-            <concurrency-control error-if-maximum-exceeded="false" />
+            <concurrency-control error-if-maximum-exceeded="false"/>
         </session-management>
-
     </http>
 
+    <beans:bean id="filterSecurityInterceptor"
+                class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+        <beans:property name="accessDecisionManager" ref="accessDecisionManager"/>
+        <beans:property name="securityMetadataSource" ref="mySecurityMetadataSource"/>
+    </beans:bean>
 
-    <!-- 认证管理器。用户名密码都集成在配置文件中 -->
+    <beans:bean id="mySecurityMetadataSource" class="com.wzq.security.acsecurity.MySecurityMetadataSource"
+                init-method="loadResourceDefine" />
+    <beans:bean id="accessDecisionManager" class="com.wzq.security.acsecurity.MyAccessDecisionManager"/>
+
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="loginUserDetailsService">
-        <!--<authentication-provider ref="loginAuthenticationProvider">-->
-            <!--<user-service>-->
-                <!--<user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN"/>-->
-                <!--<user name="user" password="user" authorities="ROLE_USER"/>-->
-            <!--</user-service>-->
-            <!--<jdbc-user-service data-source-ref="dataSource"-->
-            <!--users-by-username-query=-->
-            <!--"select username,password,status as enabled-->
-            <!--from users-->
-            <!--where username=?"-->
-            <!--authorities-by-username-query=-->
-            <!--"select u.username,r.name as authority-->
-            <!--from users u-->
-            <!--join user_role ur-->
-            <!--on u.id=ur.user_id-->
-            <!--join role r-->
-            <!--on r.id=ur.role_id-->
-            <!--where u.username=?"/>-->
         </authentication-provider>
     </authentication-manager>
-
 </beans:beans>

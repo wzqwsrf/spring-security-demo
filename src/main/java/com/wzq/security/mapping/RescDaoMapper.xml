@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wzq.security.dao.RescDaoMapper">
+    <resultMap id="BaseResultMap" type="com.wzq.security.model.Resc">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="resType" column="res_type"></result>
+        <result property="resString" column="res_string"></result>
+        <result property="priority" column="priority"></result>
+        <result property="descn" column="descn"></result>
+        <collection property="roles" ofType="com.wzq.security.model.Role">
+            <id property="id" column="a_id" />
+            <result property="name" column="name"/>
+            <result property="descn" column="descn"/>
+        </collection>
+    </resultMap>
+
+    <select id="getRescList" resultMap="BaseResultMap">
+        select c.id, c.name, c.res_type, c.res_string, c.priority, c.descn, r.id, r.name, r.descn
+        from resc c
+        join resc_role re on c.id = re.resc_id
+        join role r on r.id = re.role_id
+    </select>
+
+</mapper>

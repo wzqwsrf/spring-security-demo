@@ -31,3 +31,26 @@ alter table user_role add constraint fk_user_role_user foreign key(user_id) refe
 users(id);
 alter table user_role add constraint fk_user_role_role foreign key(role_id) references
 role(id);
+
+-- 资源
+create table resc(
+    id bigint,
+    name varchar(50),
+    res_type varchar(50),
+    res_string varchar(200),
+    priority integer,
+    descn varchar(200)
+);
+alter table resc add constraint pk_resc primary key(id);
+
+-- 资源角色连接表
+create table resc_role(
+    resc_id bigint,
+    role_id bigint
+);
+
+alter table resc_role add constraint pk_resc_role primary key(resc_id, role_id);
+alter table resc_role add constraint fk_resc_role_resc foreign key(resc_id) references
+resc(id);
+alter table resc_role add constraint fk_user_role_role foreign key(role_id) references
+role(id);

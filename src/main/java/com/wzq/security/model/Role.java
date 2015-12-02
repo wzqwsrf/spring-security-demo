@@ -2,8 +2,8 @@ package com.wzq.security.model;
 
 /**
  * Author: zhenqing.wang <wangzhenqing1008@163.com>
- * Date:
- * Description:
+ * Date: 2015-12-02 18:31:41
+ * Description: 权限表
  */
 public class Role {
     private int id;
