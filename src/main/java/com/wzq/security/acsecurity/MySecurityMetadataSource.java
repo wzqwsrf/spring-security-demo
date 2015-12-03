@@ -8,7 +8,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.*;
@@ -19,7 +19,7 @@ import java.util.*;
  * Description: 自定义MySecurityMetadataSource
  */
 
-@Repository
+//@Service
 public class MySecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     private static Map<String, Collection<ConfigAttribute>> resourceMap;
@@ -29,16 +29,19 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         AntPathMatcher urlMatcher = new AntPathMatcher();
-        String url =((FilterInvocation)object).getRequestUrl();
-        if(resourceMap != null){
+        String url = ((FilterInvocation) object).getRequestUrl();
+        if (resourceMap != null) {
             Set<String> urlPatternSet = resourceMap.keySet();
-            for(String urlPattern:urlPatternSet){
-                if(urlMatcher.match(urlPattern, url)){
+            for (String urlPattern : urlPatternSet) {
+                if (urlMatcher.match(urlPattern, url)) {
+                    System.out.println("url:" + url);
+                    System.out.println("resourceMap.get(urlPattern).iterator().next():" +
+                            resourceMap.get(urlPattern).iterator().next().getAttribute());
                     return resourceMap.get(urlPattern);
                 }
             }
         }
-        Collection <ConfigAttribute> atts  = new ArrayList < ConfigAttribute >();
+        Collection<ConfigAttribute> atts = new ArrayList<ConfigAttribute>();
         ConfigAttribute ca = new SecurityConfig("ROLE_NONE");
         atts.add(ca);
         return atts;
@@ -59,17 +62,18 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
 //        loadResourceDefine();
 //    }
 
-//  加载url权限配置
-    public void loadResourceDefine(){
+    //  加载url权限配置
+    public void loadResourceDefine() {
         resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
         List<Resc> rescList = rescRoleService.getRescList();
-        for (Resc resc : rescList){
+        for (Resc resc : rescList) {
             String url = resc.getResString();
             List<Role> roleList = resc.getRoles();
-            Collection <ConfigAttribute> atts  = new ArrayList<ConfigAttribute >();
-            for (Role role : roleList){
-                System.err.println("role.getName():"+role.getName());
-                ConfigAttribute configAttribute = new SecurityConfig("ROLE_ADMIN");
+            Collection<ConfigAttribute> atts = new ArrayList<ConfigAttribute>();
+            for (Role role : roleList) {
+                System.out.println("role.getName():"+role.getName());
+                ConfigAttribute configAttribute = new SecurityConfig(role.getName());
+//                ConfigAttribute configAttribute = new SecurityConfig("ROLE_USER");
                 atts.add(configAttribute);
             }
             resourceMap.put(url, atts);

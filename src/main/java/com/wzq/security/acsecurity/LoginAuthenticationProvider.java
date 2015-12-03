@@ -17,7 +17,8 @@ import java.util.Collection;
  * Date: 2015-11-25 12:42:09
  * Description: 登陆时验证用户名密码
  */
-@Service("loginAuthenticationProvider")
+
+@Service
 public class LoginAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
     @Override

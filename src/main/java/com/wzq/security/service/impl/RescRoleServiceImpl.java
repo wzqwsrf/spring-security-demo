@@ -23,6 +23,7 @@ public class RescRoleServiceImpl implements RescRoleService{
     public List<Resc> getRescList() {
         System.out.println("getRescList...start");
         List<Resc> list = rescDaoMapper.getRescList();
+        System.out.println("getRescList size:"+list.size());
         System.out.println("getRescList...end");
         return list;
     }
